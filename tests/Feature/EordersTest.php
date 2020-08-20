@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Eorders;
+use App\User;
 
 class EordersTest extends TestCase
 {
@@ -39,5 +40,22 @@ class EordersTest extends TestCase
 
         $response->assertSeeText('Billboard Arhelanu przed biurem w Bielsku Podlaskim');
     }
+    
+    /** @test */
+    public function en_eorder_can_be_created(){
+        // $this->withoutExceptionHandling();
 
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)->post('/eorders',[
+            'name' => 'Billboard Arhelan',
+            'discription' => 'Billboard Arhelanu przed biurem w Bielsku Podlaskim',
+        ]);
+
+        $this->assertDatabaseHas('eorders',[
+            'user_id' => $user->id,
+            'name' => 'Billboard Arhelan',
+            'discription' => 'Billboard Arhelanu przed biurem w Bielsku Podlaskim',
+        ]);
+    }
 }
