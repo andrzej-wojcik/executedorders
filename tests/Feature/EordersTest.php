@@ -16,11 +16,10 @@ class EordersTest extends TestCase
         // $this->withoutExceptionHandling();
         
         // Arrange
-         $eorder = Eorders::create([
+        $eorder = factory(Eorders::class)->create([
             'name' => 'Billboard Arhelan',
-            'discription' => 'Billboard Arhelanu przed biurem w Bielsku Podlaskim',
         ]);
-
+        
         // Act
         $response = $this -> get('/eorders/' . $eorder -> id);
         
@@ -32,8 +31,7 @@ class EordersTest extends TestCase
     /** @test */
     public function the_discription_is_shown_on_the_eorders_show_view(){
 
-        $eorder = Eorders::create([
-            'name' => 'Billboard Arhelan',
+        $eorder = factory(Eorders::class)->create([
             'discription' => 'Billboard Arhelanu przed biurem w Bielsku Podlaskim',
         ]);
 
