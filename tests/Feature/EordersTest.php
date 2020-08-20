@@ -9,13 +9,16 @@ use App\Eorders;
 
 class EordersTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function the_orders_show_route_can_be_accessed() {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         
         // Arrange
-        $eorder = Eorders::create([
-            'name' => 'Billboard Arhelanu przed biurem',
+         $eorder = Eorders::create([
+            'name' => 'Billboard Arhelan',
+            'discription' => 'Billboard Arhelanu przed biurem w Bielsku Podlaskim',
         ]);
 
         // Act
@@ -23,7 +26,20 @@ class EordersTest extends TestCase
         
         // Assert
         $response -> assertStatus(200)
-            ->assertSeeText('Billboard Arhelanu przed biurem');
+            ->assertSeeText('Billboard Arhelan');
+    }
+
+    /** @test */
+    public function the_discription_is_shown_on_the_eorders_show_view(){
+
+        $eorder = Eorders::create([
+            'name' => 'Billboard Arhelan',
+            'discription' => 'Billboard Arhelanu przed biurem w Bielsku Podlaskim',
+        ]);
+
+        $response = $this -> get('/eorders/' . $eorder -> id);
+
+        $response->assertSeeText('Billboard Arhelanu przed biurem w Bielsku Podlaskim');
     }
 
 }

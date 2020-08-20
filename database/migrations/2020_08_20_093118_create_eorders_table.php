@@ -16,6 +16,7 @@ class CreateEordersTable extends Migration
         Schema::create('eorders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('discription');
             $table->timestamps();
         });
     }
